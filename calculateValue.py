@@ -49,6 +49,7 @@ def calculate_insurance_values(start_age, start_withdrawal_age,
     results = []
     current_base_amount = initial_base_amount
     actual_withdrawal_amount = 0
+    total_withdrawable_amount = 0
 
     for age in range(start_age + 1, len(cv_table) + start_age + 1):
         year = age - start_age
@@ -61,9 +62,11 @@ def calculate_insurance_values(start_age, start_withdrawal_age,
             if withdrawal_amount < current_cash_value:
                 reduction_ratio = withdrawal_amount / current_cash_value
                 actual_withdrawal_amount = withdrawal_amount
+                total_withdrawable_amount += actual_withdrawal_amount
             else:
                 actual_withdrawal_amount = current_cash_value
                 reduction_ratio = 1
+                total_withdrawable_amount += actual_withdrawal_amount
 
             # 计算减额后的基本保额
             current_base_amount = round(
@@ -78,12 +81,20 @@ def calculate_insurance_values(start_age, start_withdrawal_age,
                                       2)
         # 存储每年的数据
         results.append({
-            "保单年度": year,
-            "年龄": age,
-            "基本保额": current_base_amount,
-            "有效保额": effective_base_amount,
-            "现金价值": current_cash_value,
-            "实际减保金额": round(actual_withdrawal_amount, 2),
+            "保单年度":
+            year,
+            "年龄":
+            age,
+            "基本保额":
+            current_base_amount,
+            "有效保额":
+            effective_base_amount,
+            "现金价值":
+            current_cash_value,
+            "实际减保金额":
+            round(actual_withdrawal_amount, 2),
+            "总共领取金额+现金价值":
+            round(total_withdrawable_amount, 2) + current_cash_value,
         })
 
     return pd.DataFrame(results)
