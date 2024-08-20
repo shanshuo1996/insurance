@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>臻承减额领取计算器</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .flex-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .form-container {
+            flex: 1;
+            margin-right: 20px;
+        }
+        .table-container {
+            flex: 2;
+        }
+        .table {
+            text-align: center;
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .table th,
+        .table td {
+            padding: 12px;
+            vertical-align: middle;
+            border-top: 1px solid #dee2e6;
+        }
+        .table thead th {
+            background-color: #007bff;
+            color: white;
+            border-bottom: 2px solid #dee2e6;
+        }
+        .table tbody tr:nth-child(odd) {
+            background-color: #f2f2f2;
+        }
+        .table tbody tr:hover {
+            background-color: #e9ecef;
+        }
+        .table-bordered {
+            border: 1px solid #dee2e6;
+        }
+        .table-bordered th,
+        .table-bordered td {
+            border: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+    <body class="container mt-4">
+        <h1 class="text-center">臻承减额领取计算器</h1>
+        <div class="flex-container">
+            <div class="form-container">
+                <form method="POST" class="mt-4">
+                    <div class="mb-3">
+                        <label for="start_age" class="form-label">投保年龄:</label>
+                        <input type="number" id="start_age" name="start_age" class="form-control" value="{{ start_age }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="gender" class="form-label">性别:</label>
+                        <select id="gender" name="gender" class="form-select">
+                            <option value="M" {% if gender == 'M' %}selected{% endif %}>男</option>
+                            <option value="F" {% if gender == 'F' %}selected{% endif %}>女</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="payment_term" class="form-label">缴费期:</label>
+                        <select id="payment_term" name="payment_term" class="form-select">
+                            <option value="1" {% if payment_term == 1 %}selected{% endif %}>1</option>
+                            <option value="3" {% if payment_term == 3 %}selected{% endif %}>3</option>
+                            <option value="5" {% if payment_term == 5 %}selected{% endif %}>5</option>
+                            <option value="10" {% if payment_term == 10 %}selected{% endif %}>10</option>
+                            <option value="20" {% if payment_term == 20 %}selected{% endif %}>20</option>
+                        </select>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="initial_premium" class="form-label">保费:</label>
+                        <input type="number" id="initial_premium" name="initial_premium" class="form-control" step="0.01" value="{{ initial_premium }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="start_withdrawal_age" class="form-label">开始减保年龄:</label>
+                        <input type="number" id="start_withdrawal_age" name="start_withdrawal_age" class="form-control" value="{{ start_withdrawal_age }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="withdrawal_amount" class="form-label">减保金额:</label>
+                        <input type="number" id="withdrawal_amount" name="withdrawal_amount" class="form-control" step="0.01" value="{{ withdrawal_amount }}" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">计算</button>
+                </form>
+            </div>
+
+            {% if tables %}
+            <div class="table-container">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        {{ tables|safe }}
+                    </table>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+    </html>
