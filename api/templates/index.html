@@ -15,22 +15,45 @@
             flex: 1;
             margin-right: 20px;
         }
+        
         .table-container {
-            flex: 2;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
         }
+
         .table {
+            font-size: 14px;
+            color: #333;
+        }
+
+        .table th {
+            background-color: #009879;
+            color: white;
             text-align: center;
-            border-collapse: separate;
-            border-spacing: 0;
-            width: 100%;
-            margin-bottom: 20px;
         }
-        .table th,
+
+        .table td, .table th {
+            padding: 12px 15px;  /* 增加列内间距 */
+            border-right: 1px solid #ddd;  /* 添加列间分隔线 */
+            min-width: 100px;  /* 设置列的最小宽度 */
+        }
+
         .table td {
-            padding: 12px;
+            text-align: center;
             vertical-align: middle;
-            border-top: 1px solid #dee2e6;
         }
+
+        .table td:last-child, .table th:last-child {
+            border-right: none;  /* 去除最后一列的右边框 */
+        }
+
+        .table-bordered {
+            border: 2px solid #ddd;
+        }
+
         .table thead th {
             background-color: #007bff;
             color: white;
@@ -83,7 +106,7 @@
 
                     <div class="mb-3">
                         <label for="initial_premium" class="form-label">保费:</label>
-                        <input type="number" id="initial_premium" name="initial_premium" class="form-control" step="0.01" value="{{ initial_premium }}" required>
+                        <input type="number" id="initial_premium" name="initial_premium" class="form-control" min="0" step="1" value="{{ initial_premium }}" required>
                     </div>
 
                     <div class="mb-3">
@@ -93,7 +116,7 @@
 
                     <div class="mb-3">
                         <label for="withdrawal_amount" class="form-label">减保金额:</label>
-                        <input type="number" id="withdrawal_amount" name="withdrawal_amount" class="form-control" step="0.01" value="{{ withdrawal_amount }}" required>
+                        <input type="number" id="withdrawal_amount" name="withdrawal_amount" class="form-control" min="0" step="1" value="{{ withdrawal_amount }}" required>
                     </div>
 
                     <button type="submit" class="btn btn-primary">计算</button>
@@ -103,12 +126,13 @@
             {% if tables %}
             <div class="table-container">
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered table-striped table-hover">
                         {{ tables|safe }}
                     </table>
                 </div>
             </div>
             {% endif %}
+            
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

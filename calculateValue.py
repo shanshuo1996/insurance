@@ -92,10 +92,11 @@ def calculate_insurance_values(start_age, start_withdrawal_age,
             "现金价值":
             current_cash_value,
             "实际减保金额":
-            round(actual_withdrawal_amount, 2),
+            actual_withdrawal_amount,
             "总共领取金额+现金价值":
-            round(total_withdrawable_amount, 2) + current_cash_value,
+            total_withdrawable_amount + current_cash_value,
         })
+        
 
     return pd.DataFrame(results)
 

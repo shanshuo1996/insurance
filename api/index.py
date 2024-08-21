@@ -18,9 +18,9 @@ def index():
         start_age = int(request.form['start_age'])
         gender = request.form['gender']
         payment_term = int(request.form['payment_term'])
-        initial_premium = float(request.form['initial_premium'])
+        initial_premium = int(float(request.form['initial_premium']))
         start_withdrawal_age = int(request.form['start_withdrawal_age'])
-        withdrawal_amount = float(request.form['withdrawal_amount'])
+        withdrawal_amount = int(float(request.form['withdrawal_amount']))
 
         db_path = 'insurance.db'
         product_id = 1  # 假设使用的产品ID
@@ -33,7 +33,9 @@ def index():
                                                 start_withdrawal_age,
                                                 withdrawal_amount,
                                                 initial_base_amount, cv_table)
-
+        results_df = results_df.astype(int)
+        tables = results_df.to_html(classes='table table-bordered table-striped table-hover',
+                                    index=False)
         # 渲染模板并传递表单数据和计算结果
         return render_template('index.html',
                                start_age=start_age,
@@ -42,8 +44,8 @@ def index():
                                initial_premium=initial_premium,
                                start_withdrawal_age=start_withdrawal_age,
                                withdrawal_amount=withdrawal_amount,
-                               tables=results_df.to_html(classes='data',
-                                                         header="true"))
+                               tables=tables
+                               )
 
     return render_template('index.html')
 
